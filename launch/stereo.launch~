@@ -1,0 +1,20 @@
+<launch>
+
+  <node pkg="rosbag" type="play" name="player" args="--clock /home/adrl/bagfiles/slow_motion.bag">
+    <remap from="cam0/camera_info" to="stereo/left/camera_info"/>
+    <remap from="cam1/camera_info" to="stereo/right/camera_info"/>
+  </node>
+  
+  <!-- Creates Disparity map out of stereo camera -->
+  <node name="disparity" pkg="beginner_tutorials" type="disparity" />
+
+  <!-- Show left and right image -->
+  <node pkg="image_view" type="image_view" name="image_left">
+    <remap from="image" to="/stereo/left/image_raw"/>
+  </node>
+  <node pkg="image_view" type="image_view" name="image_right">
+    <remap from="image" to="/stereo/right/image_raw"/>
+  </node>
+
+
+</launch>
